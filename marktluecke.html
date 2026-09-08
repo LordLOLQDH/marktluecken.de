@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <header class="header">
@@ -47,9 +47,9 @@
     const id=new URLSearchParams(location.search).get('id');
     const idea=MARKTLUECKEN_IDEAS.find(item=>item.id===id);
     const statusBadge=document.getElementById('detailStatusBadge'),statusSelect=document.getElementById('detailStatus'),saveButton=document.getElementById('saveStatus'),statusMessage=document.getElementById('statusMessage');
-    function setStatus(status){const value=STATUS_LABELS[status]?'': 'unknown';const safeStatus=STATUS_LABELS[status]?status:'unknown';statusBadge.textContent=STATUS_LABELS[safeStatus];statusBadge.className=`status-badge status-${safeStatus}`;statusSelect.value=safeStatus;}
-    async function loadStatus(){try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken?id=eq.${encodeURIComponent(id)}&select=status`,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}});if(!response.ok)throw new Error('Status konnte nicht geladen werden');const rows=await response.json();setStatus(rows[0]?.status||'unknown');}catch(error){setStatus('unknown');statusMessage.textContent='Status konnte nicht geladen werden.';statusMessage.className='status-message error';}}
-    async function saveStatus(){const status=statusSelect.value;saveButton.disabled=true;statusMessage.textContent='Speichert …';statusMessage.className='status-message';try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`, 'Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id,status})});if(!response.ok)throw new Error('Speichern fehlgeschlagen');setStatus(status);statusMessage.textContent='Status gespeichert. Er gilt jetzt für alle Besucher.';statusMessage.className='status-message success';}catch(error){statusMessage.textContent='Status konnte nicht gespeichert werden.';statusMessage.className='status-message error';}finally{saveButton.disabled=false;}}
+    function setStatus(status){const safeStatus=STATUS_LABELS[status]?status:'unknown';statusBadge.textContent=STATUS_LABELS[safeStatus];statusBadge.className=`status-badge status-${safeStatus}`;statusSelect.value=safeStatus;}
+    async function loadStatus(){try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken?id=eq.${encodeURIComponent(id)}&select=status`,{headers:{apikey:SUPABASE_KEY,Accept:'application/json'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);const rows=await response.json();setStatus(rows[0]?.status||'unknown');}catch(error){setStatus('unknown');statusMessage.textContent='Status konnte nicht geladen werden.';statusMessage.className='status-message error';console.warn('Supabase Status:',error);}}
+    async function saveStatus(){const status=statusSelect.value;saveButton.disabled=true;statusMessage.textContent='Speichert …';statusMessage.className='status-message';try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken`,{method:'POST',headers:{apikey:SUPABASE_KEY,Accept:'application/json','Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id,status})});if(!response.ok)throw new Error(`HTTP ${response.status}`);setStatus(status);statusMessage.textContent='Status gespeichert. Er gilt jetzt für alle Besucher.';statusMessage.className='status-message success';}catch(error){statusMessage.textContent='Status konnte nicht gespeichert werden.';statusMessage.className='status-message error';console.warn('Supabase Status:',error);}finally{saveButton.disabled=false;}}
     if(!idea){location.replace('404.html');}else{document.title=`${idea.title} · Marktlücken.de`;document.getElementById('detailTag').textContent=idea.tag;document.getElementById('detailTitle').textContent=idea.title;document.getElementById('detailDescription').textContent=idea.description;document.getElementById('detailLongDescription').textContent=idea.longDescription;loadStatus();}
     saveButton.addEventListener('click',saveStatus);
   </script>

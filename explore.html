@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <header class="header">
@@ -56,7 +56,7 @@
     function statusClass(status){return `status-${status||'unknown'}`;}
     function renderIdeas(){let ideas=[...MARKTLUECKEN_IDEAS];if(sortIdeas.value==='title')ideas.sort((a,b)=>a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='category')ideas.sort((a,b)=>a.tag.localeCompare(b.tag,'de')||a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='random')ideas.sort(()=>Math.random()-.5);cardsEl.innerHTML=ideas.map(idea=>{const number=String(MARKTLUECKEN_IDEAS.indexOf(idea)+1).padStart(3,'0'),status=statusMap[idea.id]||'unknown';return `<article class="card explore-card" data-number="${number}" data-search="${idea.title} ${idea.tag} ${idea.description}" data-category="${idea.tag}" data-status="${status}" tabindex="-1"><div class="card-topline"><span class="idea-number">#${number}</span><span class="tag">${idea.tag}</span></div><h3>${idea.title}</h3><p>${idea.description}</p><div class="card-bottomline"><span class="status-badge ${statusClass(status)}">${STATUS_LABELS[status]}</span><a href="marktluecke.html?id=${encodeURIComponent(idea.id)}">Marktlücke ansehen →</a></div></article>`;}).join('');filterExplore();}
     function filterExplore(){const q=input.value.trim().toLowerCase(),cat=categoryFilter.value,status=statusFilter.value,cards=[...document.querySelectorAll('.explore-card')];let visible=0;cards.forEach(card=>{const match=(!q||card.dataset.search.toLowerCase().includes(q))&&(cat==='all'||card.dataset.category===cat)&&(status==='all'||card.dataset.status===status);card.hidden=!match;if(match)visible++;});visibleCount.textContent=`${visible} von ${MARKTLUECKEN_IDEAS.length} Marktlücken angezeigt`;noResults.hidden=visible!==0;}
-    async function loadStatuses(){try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken?select=id,status` ,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}});if(!response.ok)throw new Error('Status konnte nicht geladen werden');const rows=await response.json();statusMap=Object.fromEntries(rows.map(row=>[row.id,row.status]));}catch(error){console.warn('Supabase:',error.message);}renderIdeas();}
+    async function loadStatuses(){try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken?select=id,status`,{headers:{apikey:SUPABASE_KEY,Accept:'application/json'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);const rows=await response.json();statusMap=Object.fromEntries(rows.map(row=>[row.id,row.status]));}catch(error){console.warn('Supabase Status:',error);}renderIdeas();}
     renderIdeas();loadStatuses();exploreForm.addEventListener('submit',e=>{e.preventDefault();filterExplore();});input.addEventListener('input',filterExplore);categoryFilter.addEventListener('change',filterExplore);statusFilter.addEventListener('change',filterExplore);sortIdeas.addEventListener('change',renderIdeas);randomButton.addEventListener('click',()=>{const cards=[...document.querySelectorAll('.explore-card')].filter(c=>!c.hidden);if(!cards.length)return;const card=cards[Math.floor(Math.random()*cards.length)];card.scrollIntoView({behavior:'smooth',block:'center'});card.focus({preventScroll:true});});
   </script>
 </body>

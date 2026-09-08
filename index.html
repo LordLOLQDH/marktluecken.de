@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Marktlücken.de – Entdecke Dinge, die es noch nicht gibt, aber geben sollte.">
+  <meta name="description" content="Marktlücken.de – Die Startseite für die Entdeckung neuer Marktlücken.">
   <title>Marktlücken.de</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,11 +12,8 @@
     <a class="logo" href="index.html" aria-label="Marktlücken.de Startseite">Marktlücken<span>.de</span></a>
     <button class="menu-button" id="menuButton" aria-label="Menü öffnen" aria-expanded="false">☰</button>
     <nav class="menu" id="menu" aria-hidden="true">
-      <a href="#suchen">Suchen</a>
       <a href="explore.html">Marktlücken.explore</a>
       <a href="#neu">Marktlücke einreichen</a>
-      <a href="#beliebt">Beliebte Marktlücken</a>
-      <a href="#kategorien">Kategorien</a>
     </nav>
   </header>
 
@@ -24,49 +21,35 @@
     <section class="hero" id="suchen">
       <p class="eyebrow">Marktlücken.de</p>
       <h1>Was fehlt auf der Welt?</h1>
-      <p class="intro">Entdecke Ideen für Dinge, die es noch nicht gibt – aber geben sollte.</p>
-      <form class="search" id="searchForm">
-        <label for="searchInput" class="sr-only">Nach einer Marktlücke suchen</label>
-        <input id="searchInput" type="search" placeholder="Nach einer Marktlücke suchen ..." autocomplete="off">
-        <button type="submit">Suchen</button>
-      </form>
-      <a class="explore-button" href="explore.html">Marktlücken.explore →</a>
-    </section>
+      <p class="intro">Marktlücken entdecken, Ideen finden und sehen, was es noch nicht gibt – aber geben sollte.</p>
 
-    <section class="section" id="beliebt">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Entdecken</p>
-          <h2>Interessante Marktlücken</h2>
-        </div>
-      </div>
-      <div class="cards" id="cards">
-        <article class="card">
-          <span class="tag">Essen &amp; Getränke · Toskana</span>
-          <h3>Toskana-Limonade</h3>
-          <p>Eine regionale Limonade, die in der Toskana als lokale Alternative zu klassischen Softdrinks angeboten werden könnte.</p>
-          <a href="#">Marktlücke ansehen →</a>
-        </article>
-        <article class="card">
-          <span class="tag">Mobilität</span>
-          <h3>E-Bike-Akku-Tauschstationen</h3>
-          <p>Stationen, an denen leer gefahrene E-Bike-Akkus schnell gegen geladene Akkus getauscht werden können.</p>
-          <a href="#">Marktlücke ansehen →</a>
-        </article>
-        <article class="card">
-          <span class="tag">Reisen &amp; Hotels</span>
-          <h3>Frühstück für Frühreisende</h3>
-          <p>Hotels könnten für Gäste mit sehr früher Abreise ein einfaches Frühstückspaket zum Mitnehmen anbieten.</p>
-          <a href="#">Marktlücke ansehen →</a>
-        </article>
-      </div>
+      <a class="explore-button explore-button-main" href="explore.html">
+        <span>Marktlücken.explore</span>
+        <span class="explore-arrow">→</span>
+      </a>
     </section>
 
     <section class="submit-section" id="neu">
       <p class="eyebrow">Mitmachen</p>
       <h2>Kennst du eine Marktlücke?</h2>
-      <p>Eine Idee, ein Problem oder etwas, das dir im Alltag fehlt? Genau daraus kann eine neue Marktlücke entstehen.</p>
-      <button class="outline-button" type="button" id="submitIdea">Marktlücke einreichen</button>
+      <p>Schick uns deine Idee. Beschreibe kurz, was fehlt und warum es deiner Meinung nach gebraucht wird.</p>
+
+      <form class="contact-form" id="submitForm">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" placeholder="Dein Name" required>
+
+        <label for="email">E-Mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="deine@email.de" required>
+
+        <label for="idea">Deine Marktlücke</label>
+        <input id="idea" name="idea" type="text" placeholder="Was fehlt noch?" required>
+
+        <label for="message">Beschreibung</label>
+        <textarea id="message" name="message" rows="6" placeholder="Beschreibe die Marktlücke und warum sie interessant sein könnte ..." required></textarea>
+
+        <button class="submit-form-button" type="submit">Marktlücke senden →</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 

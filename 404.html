@@ -8,23 +8,37 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="error-page">
-  <header class="header">
+  <div class="error-grid" aria-hidden="true"></div>
+
+  <header class="header error-header">
     <a class="logo" href="index.html" aria-label="Marktlücken.de Startseite">Marktlücken<span>.de</span></a>
-    <a class="error-home-link" href="explore.html">Explore →</a>
+    <a class="error-explore-link" href="explore.html">Explore <span>↗</span></a>
   </header>
 
   <main class="error-main">
-    <div class="error-number" aria-hidden="true">404</div>
-    <p class="eyebrow">Marktlücke gefunden</p>
-    <h1>Diese Seite fehlt.</h1>
-    <p class="error-text">Du hast gerade etwas gefunden, das es nicht gibt. Eigentlich genau das, wonach Marktlücken suchen.</p>
+    <div class="error-card">
+      <div class="error-topline">
+        <span>404</span>
+        <span>NICHT GEFUNDEN</span>
+      </div>
 
-    <div class="error-actions">
-      <a class="explore-button explore-button-main" href="explore.html">
-        <span>Marktlücken.explore</span>
-        <span class="explore-arrow">→</span>
-      </a>
-      <a class="error-back" href="index.html">Zur Startseite</a>
+      <div class="error-visual" aria-hidden="true">
+        <span class="error-visual-number">4</span>
+        <span class="error-dot"></span>
+        <span class="error-visual-number">4</span>
+      </div>
+
+      <p class="eyebrow">Marktlücke gefunden</p>
+      <h1>Diese Seite fehlt.</h1>
+      <p class="error-text">Du hast gerade etwas gefunden, das es nicht gibt. Eigentlich genau das, wonach Marktlücken suchen.</p>
+
+      <div class="error-actions">
+        <a class="error-primary-button" href="explore.html">
+          <span>Marktlücken.explore</span>
+          <span class="error-button-arrow">→</span>
+        </a>
+        <a class="error-back" href="index.html">Zur Startseite</a>
+      </div>
     </div>
   </main>
 

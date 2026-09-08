@@ -24,13 +24,11 @@
     </section>
     <section class="section" id="kategorien">
       <div class="section-heading">
-        <div><p class="eyebrow">Übersicht</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2><p class="results-count" id="visibleCount"></p></div>
+        <div class="section-title"><p class="eyebrow">Übersicht</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2><p class="results-count" id="visibleCount"></p></div>
         <div class="explore-controls">
-          <label class="filter-label" for="categoryFilter">Kategorie</label>
-          <select id="categoryFilter" aria-label="Kategorie filtern"><option value="all">Alle Kategorien</option></select>
-          <label class="filter-label" for="sortIdeas">Sortieren</label>
-          <select id="sortIdeas" aria-label="Marktlücken sortieren"><option value="number">Nummer</option><option value="title">Name A–Z</option><option value="category">Kategorie</option><option value="random">Zufällig</option></select>
-          <button class="outline-button" id="randomIdea" type="button">Zufällige Marktlücke</button>
+          <label for="categoryFilter"><span>Kategorie</span><select id="categoryFilter" aria-label="Kategorie filtern"><option value="all">Alle Kategorien</option></select></label>
+          <label for="sortIdeas"><span>Sortierung</span><select id="sortIdeas" aria-label="Marktlücken sortieren"><option value="number">Nummer</option><option value="title">Name A–Z</option><option value="category">Kategorie</option><option value="random">Zufällig</option></select></label>
+          <button class="random-button" id="randomIdea" type="button">Zufällige Marktlücke <span>↗</span></button>
         </div>
       </div>
       <div class="cards" id="exploreCards"></div>

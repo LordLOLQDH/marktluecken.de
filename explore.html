@@ -23,7 +23,16 @@
       <form class="search" id="exploreSearchForm"><label for="exploreSearchInput" class="sr-only">Marktlücken durchsuchen</label><input id="exploreSearchInput" type="search" placeholder="Marktlücken durchsuchen ..." autocomplete="off"><button type="submit">Suchen</button></form>
     </section>
     <section class="section" id="kategorien">
-      <div class="section-heading"><div><p class="eyebrow">Marktlücken.explore</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2></div><button class="outline-button" id="randomIdea" type="button">Zufällige Marktlücke</button></div>
+      <div class="section-heading">
+        <div><p class="eyebrow">Übersicht</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2><p class="results-count" id="visibleCount"></p></div>
+        <div class="explore-controls">
+          <label class="filter-label" for="categoryFilter">Kategorie</label>
+          <select id="categoryFilter" aria-label="Kategorie filtern"><option value="all">Alle Kategorien</option></select>
+          <label class="filter-label" for="sortIdeas">Sortieren</label>
+          <select id="sortIdeas" aria-label="Marktlücken sortieren"><option value="number">Nummer</option><option value="title">Name A–Z</option><option value="category">Kategorie</option><option value="random">Zufällig</option></select>
+          <button class="outline-button" id="randomIdea" type="button">Zufällige Marktlücke</button>
+        </div>
+      </div>
       <div class="cards" id="exploreCards"></div>
       <p id="noExploreResults" class="no-results" hidden>Keine passende Marktlücke gefunden.</p>
     </section>
@@ -33,13 +42,21 @@
   <script src="ideas.js"></script>
   <script src="script.js"></script>
   <script>
-    const exploreForm=document.getElementById('exploreSearchForm'), input=document.getElementById('exploreSearchInput'), cardsEl=document.getElementById('exploreCards'), noResults=document.getElementById('noExploreResults'), randomButton=document.getElementById('randomIdea');
-    cardsEl.innerHTML=MARKTLUECKEN_IDEAS.map(idea=>`<article class="card explore-card" data-search="${idea.title} ${idea.tag} ${idea.description}" tabindex="-1"><span class="tag">${idea.tag}</span><h3>${idea.title}</h3><p>${idea.description}</p><a href="marktluecke.html?id=${encodeURIComponent(idea.id)}">Marktlücke ansehen →</a></article>`).join('');
-    document.getElementById('ideaCount').textContent=`(${MARKTLUECKEN_IDEAS.length})`;
-    const cards=[...document.querySelectorAll('.explore-card')];
-    function filterExplore(){const q=input.value.trim().toLowerCase();let visible=0;cards.forEach(card=>{const match=!q||card.dataset.search.toLowerCase().includes(q);card.hidden=!match;if(match)visible++;});noResults.hidden=visible!==0;}
-    exploreForm.addEventListener('submit',e=>{e.preventDefault();filterExplore();}); input.addEventListener('input',filterExplore);
-    randomButton.addEventListener('click',()=>{const available=cards.filter(c=>!c.hidden);const list=available.length?available:cards;const card=list[Math.floor(Math.random()*list.length)];card.scrollIntoView({behavior:'smooth',block:'center'});card.focus({preventScroll:true});});
+    const exploreForm=document.getElementById('exploreSearchForm'),input=document.getElementById('exploreSearchInput'),cardsEl=document.getElementById('exploreCards'),noResults=document.getElementById('noExploreResults'),randomButton=document.getElementById('randomIdea'),categoryFilter=document.getElementById('categoryFilter'),sortIdeas=document.getElementById('sortIdeas'),visibleCount=document.getElementById('visibleCount');
+    const categories=[...new Set(MARKTLUECKEN_IDEAS.map(idea=>idea.tag))].sort((a,b)=>a.localeCompare(b,'de'));
+    categories.forEach(category=>{const option=document.createElement('option');option.value=category;option.textContent=category;categoryFilter.appendChild(option);});
+    function renderIdeas(){
+      let ideas=[...MARKTLUECKEN_IDEAS];
+      if(sortIdeas.value==='title')ideas.sort((a,b)=>a.title.localeCompare(b.title,'de'));
+      else if(sortIdeas.value==='category')ideas.sort((a,b)=>a.tag.localeCompare(b.tag,'de')||a.title.localeCompare(b.title,'de'));
+      else if(sortIdeas.value==='random')ideas.sort(()=>Math.random()-.5);
+      cardsEl.innerHTML=ideas.map((idea,index)=>`<article class="card explore-card" data-number="${String(MARKTLUECKEN_IDEAS.indexOf(idea)+1).padStart(3,'0')}" data-search="${idea.title} ${idea.tag} ${idea.description}" data-category="${idea.tag}" tabindex="-1"><div class="card-topline"><span class="idea-number">#${String(MARKTLUECKEN_IDEAS.indexOf(idea)+1).padStart(3,'0')}</span><span class="tag">${idea.tag}</span></div><h3>${idea.title}</h3><p>${idea.description}</p><a href="marktluecke.html?id=${encodeURIComponent(idea.id)}">Marktlücke ansehen →</a></article>`).join('');
+      filterExplore();
+    }
+    function filterExplore(){const q=input.value.trim().toLowerCase(),cat=categoryFilter.value;const cards=[...document.querySelectorAll('.explore-card')];let visible=0;cards.forEach(card=>{const matchText=!q||card.dataset.search.toLowerCase().includes(q);const matchCategory=cat==='all'||card.dataset.category===cat;const match=matchText&&matchCategory;card.hidden=!match;if(match)visible++;});visibleCount.textContent=`${visible} von ${MARKTLUECKEN_IDEAS.length} Marktlücken angezeigt`;noResults.hidden=visible!==0;}
+    renderIdeas();
+    exploreForm.addEventListener('submit',e=>{e.preventDefault();filterExplore();});input.addEventListener('input',filterExplore);categoryFilter.addEventListener('change',filterExplore);sortIdeas.addEventListener('change',renderIdeas);
+    randomButton.addEventListener('click',()=>{const cards=[...document.querySelectorAll('.explore-card')].filter(c=>!c.hidden);if(!cards.length)return;const card=cards[Math.floor(Math.random()*cards.length)];card.scrollIntoView({behavior:'smooth',block:'center'});card.focus({preventScroll:true});});
   </script>
 </body>
 </html>

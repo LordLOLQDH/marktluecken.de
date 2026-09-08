@@ -95,88 +95,56 @@ h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
   box-shadow: 0 12px 28px rgba(0,0,0,.14);
   transition: transform .18s ease, box-shadow .18s ease;
 }
-
-.explore-button-main:hover {
-  color: #fff;
-  text-decoration: none;
-  transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(0,0,0,.18);
-}
-
+.explore-button-main:hover { color: #fff; text-decoration: none; transform: translateY(-2px); box-shadow: 0 16px 34px rgba(0,0,0,.18); }
 .explore-arrow { font-size: 1.35rem; line-height: 1; }
 
-.submit-section {
-  margin: 20px auto 100px;
-  max-width: 700px;
-  padding: 55px 30px;
-  text-align: center;
-  background: var(--surface);
-  border-radius: 18px;
-}
-
+.submit-section { margin: 20px auto 100px; max-width: 700px; padding: 55px 30px; text-align: center; background: var(--surface); border-radius: 18px; }
 .submit-section > p:not(.eyebrow) { color: var(--muted); margin: 18px auto 30px; }
-
-.contact-form {
-  display: grid;
-  gap: 10px;
-  text-align: left;
-}
-
-.contact-form label {
-  margin-top: 8px;
-  font-size: .9rem;
-  font-weight: 700;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  border: 1px solid #d4d4d4;
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text);
-  padding: 13px 14px;
-  font: inherit;
-  outline: none;
-}
-
+.contact-form { display: grid; gap: 10px; text-align: left; }
+.contact-form label { margin-top: 8px; font-size: .9rem; font-weight: 700; }
+.contact-form input, .contact-form textarea { width: 100%; border: 1px solid #d4d4d4; border-radius: 10px; background: #fff; color: var(--text); padding: 13px 14px; font: inherit; outline: none; }
 .contact-form textarea { resize: vertical; min-height: 150px; }
-.contact-form input:focus,
-.contact-form textarea:focus { border-color: #777; box-shadow: 0 0 0 3px rgba(0,0,0,.06); }
-
-.submit-form-button {
-  margin-top: 12px;
-  border: 0;
-  border-radius: 10px;
-  padding: 14px 18px;
-  background: var(--accent);
-  color: #fff;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
+.contact-form input:focus, .contact-form textarea:focus { border-color: #777; box-shadow: 0 0 0 3px rgba(0,0,0,.06); }
+.submit-form-button { margin-top: 12px; border: 0; border-radius: 10px; padding: 14px 18px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
 .submit-form-button:hover { opacity: .9; }
 .submit-form-button:disabled { cursor: wait; opacity: .6; }
-
 .form-status { min-height: 24px; margin: 4px 0 0; font-size: .92rem; text-align: center; }
 .form-status.success { color: #28723b; }
 .form-status.error { color: #a12828; }
 
-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 28px 5vw;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: .9rem;
-}
-
-footer a:hover { color: var(--text); }
+/* 404 */
+.error-page { min-height: 100vh; background: #0d0d0d; color: #fff; overflow-x: hidden; position: relative; }
+.error-page .header { border-bottom: 1px solid rgba(255,255,255,.13); position: relative; z-index: 2; }
+.error-page .logo span { color: rgba(255,255,255,.48); }
+.error-explore-link { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 9px 15px; font-size: .88rem; font-weight: 700; transition: background .2s, border-color .2s, transform .2s; }
+.error-explore-link:hover { background: #fff; color: #111; border-color: #fff; transform: translateY(-1px); }
+.error-explore-link span { margin-left: 5px; }
+.error-grid { position: absolute; inset: 0; opacity: .13; background-image: linear-gradient(rgba(255,255,255,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.22) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 82%); pointer-events: none; }
+.error-main { min-height: calc(100vh - 150px); display: grid; place-items: center; padding: 70px 24px 90px; position: relative; z-index: 1; }
+.error-card { width: min(100%, 850px); text-align: center; }
+.error-topline { display: flex; justify-content: space-between; color: rgba(255,255,255,.42); font-size: .7rem; font-weight: 800; letter-spacing: .18em; margin-bottom: 18px; }
+.error-visual { display: flex; justify-content: center; align-items: center; gap: clamp(12px, 3vw, 28px); margin: 0 auto 8px; }
+.error-visual-number { font-size: clamp(8rem, 25vw, 19rem); line-height: .78; font-weight: 900; letter-spacing: -.12em; color: #fff; text-shadow: 12px 12px 0 rgba(255,255,255,.07); }
+.error-dot { width: clamp(18px, 4vw, 34px); height: clamp(18px, 4vw, 34px); border-radius: 50%; background: #fff; box-shadow: 0 0 0 12px rgba(255,255,255,.08), 0 0 45px rgba(255,255,255,.16); }
+.error-page .eyebrow { color: rgba(255,255,255,.52); margin-top: 30px; }
+.error-page h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); margin: 0; }
+.error-text { max-width: 590px; margin: 22px auto 34px; color: rgba(255,255,255,.58); font-size: 1.02rem; }
+.error-actions { display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
+.error-primary-button { min-width: 245px; display: inline-flex; justify-content: space-between; align-items: center; padding: 15px 18px 15px 21px; border-radius: 11px; background: #fff; color: #111; font-weight: 800; transition: transform .2s, box-shadow .2s; }
+.error-primary-button:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(255,255,255,.12); }
+.error-button-arrow { font-size: 1.3rem; }
+.error-back { color: rgba(255,255,255,.62); font-size: .92rem; font-weight: 650; padding: 12px 4px; border-bottom: 1px solid rgba(255,255,255,.3); }
+.error-back:hover { color: #fff; border-color: #fff; }
+.error-page footer { position: relative; z-index: 2; border-top-color: rgba(255,255,255,.13); color: rgba(255,255,255,.4); }
+.error-page footer a:hover { color: #fff; }
 
 @media (max-width: 720px) {
   .hero { padding-top: 10vh; }
   .explore-button-main { width: 100%; }
   .submit-section { margin: 10px 16px 70px; padding: 42px 20px; }
   footer { flex-direction: column; gap: 8px; }
+  .error-main { min-height: calc(100vh - 130px); padding-top: 40px; }
+  .error-topline { margin-bottom: 12px; }
+  .error-text { font-size: .96rem; }
+  .error-primary-button { width: 100%; }
 }

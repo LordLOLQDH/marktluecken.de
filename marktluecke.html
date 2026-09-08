@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Details zu einer Marktlücke auf Marktlücken.de.">
   <title>Marktlücke · Marktlücken.de</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,15 +35,7 @@
   <footer><a href="index.html">Marktlücken.de</a><a href="explore.html">Marktlücken.explore</a></footer>
   <script src="ideas.js"></script><script src="script.js"></script>
   <script>
-    const id=new URLSearchParams(location.search).get('id');
-    const idea=MARKTLUECKEN_IDEAS.find(item=>item.id===id);
-    if(!idea) location.replace('404.html'); else {
-      document.title=`${idea.title} · Marktlücken.de`;
-      document.getElementById('detailTag').textContent=idea.tag;
-      document.getElementById('detailTitle').textContent=idea.title;
-      document.getElementById('detailDescription').textContent=idea.description;
-      document.getElementById('detailLongDescription').textContent=idea.longDescription;
-    }
+    const id=new URLSearchParams(location.search).get('id');const idea=MARKTLUECKEN_IDEAS.find(item=>item.id===id);if(!idea) location.replace('404.html'); else {document.title=`${idea.title} · Marktlücken.de`;document.getElementById('detailTag').textContent=idea.tag;document.getElementById('detailTitle').textContent=idea.title;document.getElementById('detailDescription').textContent=idea.description;document.getElementById('detailLongDescription').textContent=idea.longDescription;}
   </script>
 </body>
 </html>

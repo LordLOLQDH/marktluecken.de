@@ -14,9 +14,7 @@ h1,h2,h3 { line-height:.98; letter-spacing:-.07em; } h1 { margin:0; font-size:cl
 .intro { max-width:600px; margin:25px auto 38px; color:var(--muted); font-size:1.05rem; line-height:1.65; }
 .explore-button { display:inline-flex; align-items:center; justify-content:center; gap:14px; min-height:52px; padding:0 22px; border:0; border-radius:9px; background:#111; color:#fff; font-size:.95rem; font-weight:750; line-height:1; cursor:pointer; transition:transform .2s ease,box-shadow .2s ease,background .2s ease; }
 .explore-button:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.14); background:#222; }
-.explore-button-main { margin-top:2px; }
-.explore-arrow { display:inline-block; font-size:1.2rem; transition:transform .2s ease; }
-.explore-button:hover .explore-arrow { transform:translateX(4px); }
+.explore-button-main { margin-top:2px; } .explore-arrow { display:inline-block; font-size:1.2rem; transition:transform .2s ease; } .explore-button:hover .explore-arrow { transform:translateX(4px); }
 .submit-section { width:min(900px,calc(100% - 32px)); margin:0 auto 100px; padding:65px 40px; text-align:center; background:#fff; border:1px solid #e1e1dc; border-radius:14px; }
 .submit-section .eyebrow { margin-bottom:22px; } .submit-section > p:not(.eyebrow) { max-width:580px; margin:22px auto 32px; color:var(--muted); }
 .contact-form { max-width:650px; margin:35px auto 0; display:grid; gap:10px; text-align:left; } .contact-form label { margin-top:8px; font-size:.9rem; font-weight:700; }
@@ -36,6 +34,7 @@ h1,h2,h3 { line-height:.98; letter-spacing:-.07em; } h1 { margin:0; font-size:cl
 .card-bottomline { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
 .status-badge { display:inline-flex; align-items:center; min-height:28px; padding:5px 10px; border:1px solid var(--line); border-radius:999px; background:#f7f7f4; color:#555; font-size:.7rem; font-weight:800; letter-spacing:.04em; }
 .status-free { background:#f4f8f4; border-color:#cbdccc; color:#32643a; } .status-development { background:#faf7ef; border-color:#e3d7b9; color:#765f26; } .status-used { background:#f7f1f1; border-color:#e1c9c9; color:#7b3636; } .status-unknown { background:#f7f7f4; color:#666; }
+.detail-hero { padding-top:7vh; padding-bottom:7vh; } .back-link { display:inline-flex; align-items:center; margin:0 auto 28px; color:#777; font-size:.86rem; font-weight:700; } .back-link:hover { color:#111; text-decoration:underline; } .detail-content { max-width:900px; } .detail-content > p:not(.eyebrow) { max-width:650px; margin:22px auto 32px; color:var(--muted); font-size:1.02rem; line-height:1.75; }
 .status-panel { max-width:650px; margin:35px auto 32px; padding:24px; text-align:left; border:1px solid #e1e1dc; border-radius:12px; background:#fafaf7; } .status-panel > div:first-child { margin-bottom:18px; }
 .status-label { margin:0 0 8px; color:#777; font-size:.68rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase; } .status-editor { display:grid; gap:6px; margin-bottom:12px; } .status-editor span { font-size:.85rem; font-weight:700; } .status-editor select { width:100%; height:46px; border:1px solid #d4d4d0; border-radius:9px; background:#fff; padding:0 12px; color:#111; outline:none; } .status-editor select:focus { border-color:#777; box-shadow:0 0 0 3px rgba(0,0,0,.05); }
 .status-save-button { width:100%; } .status-save-button:disabled { cursor:wait; opacity:.6; } .status-message { min-height:22px; margin:10px 0 0; font-size:.85rem; text-align:center; color:var(--muted); } .status-message.success { color:#28723b; } .status-message.error { color:#a12828; }

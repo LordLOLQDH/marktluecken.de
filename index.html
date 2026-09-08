@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <header class="header">
@@ -21,52 +21,31 @@
       <a href="#neu">Marktlücke einreichen</a>
     </nav>
   </header>
-
   <main>
     <section class="hero" id="suchen">
       <p class="eyebrow">Marktlücken.de</p>
       <h1>Was fehlt auf der Welt?</h1>
       <p class="intro">Marktlücken entdecken, Ideen finden und sehen, was es noch nicht gibt – aber geben sollte.</p>
-
-      <a class="explore-button explore-button-main" href="explore.html">
-        <span>Marktlücken.explore</span>
-        <span class="explore-arrow">→</span>
-      </a>
+      <a class="explore-button explore-button-main" href="explore.html"><span>Marktlücken.explore</span><span class="explore-arrow">→</span></a>
     </section>
-
     <section class="submit-section" id="neu">
       <p class="eyebrow">Mitmachen</p>
       <h2>Kennst du eine Marktlücke?</h2>
       <p>Schick uns deine Idee. Beschreibe kurz, was fehlt und warum es deiner Meinung nach gebraucht wird.</p>
-
       <form class="contact-form" id="submitForm">
         <input type="hidden" name="access_key" value="c2d65e1c-9440-48fb-8291-b206c6a3649f">
         <input type="hidden" name="subject" value="Neue Marktlücke über Marktlücken.de">
         <input type="hidden" name="from_name" value="Marktlücken.de">
-
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" autocomplete="name" placeholder="Dein Name" required>
-
-        <label for="email">E-Mail</label>
-        <input id="email" name="email" type="email" autocomplete="email" placeholder="deine@email.de" required>
-
-        <label for="idea">Deine Marktlücke</label>
-        <input id="idea" name="idea" type="text" placeholder="Was fehlt noch?" required>
-
-        <label for="message">Beschreibung</label>
-        <textarea id="message" name="message" rows="6" placeholder="Beschreibe die Marktlücke und warum sie interessant sein könnte ..." required></textarea>
-
+        <label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Dein Name" required>
+        <label for="email">E-Mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="deine@email.de" required>
+        <label for="idea">Deine Marktlücke</label><input id="idea" name="idea" type="text" placeholder="Was fehlt noch?" required>
+        <label for="message">Beschreibung</label><textarea id="message" name="message" rows="6" placeholder="Beschreibe die Marktlücke und warum sie interessant sein könnte ..." required></textarea>
         <button class="submit-form-button" type="submit">Marktlücke senden →</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </section>
   </main>
-
-  <footer>
-    <a href="index.html">Marktlücken.de</a>
-    <a href="explore.html">Marktlücken.explore</a>
-  </footer>
-
+  <footer><a href="index.html">Marktlücken.de</a><a href="explore.html">Marktlücken.explore</a></footer>
   <script src="script.js"></script>
 </body>
 </html>

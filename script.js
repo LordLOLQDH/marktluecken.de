@@ -1,43 +1,60 @@
 const menuButton = document.getElementById('menuButton');
 const menu = document.getElementById('menu');
 
-menuButton.addEventListener('click', () => {
-  const open = menu.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
-  menu.setAttribute('aria-hidden', String(!open));
-  menuButton.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
-});
+if (menuButton && menu) {
+  menuButton.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    menuButton.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+    menuButton.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
 
-document.addEventListener('click', (event) => {
-  if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-    menu.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    menuButton.setAttribute('aria-label', 'Menü öffnen');
-  }
-});
+  document.addEventListener('click', (event) => {
+    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+      menu.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      menuButton.setAttribute('aria-label', 'Menü öffnen');
+    }
+  });
+}
 
-const searchForm = document.getElementById('searchForm');
-const searchInput = document.getElementById('searchInput');
-const cards = document.getElementById('cards');
+const submitForm = document.getElementById('submitForm');
+const formStatus = document.getElementById('formStatus');
 
-searchForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const query = searchInput.value.trim().toLowerCase();
-  if (!query) return;
+if (submitForm && formStatus) {
+  submitForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-  const cardList = [...cards.querySelectorAll('.card')];
-  const matches = cardList.filter(card => card.textContent.toLowerCase().includes(query));
+    const button = submitForm.querySelector('button[type="submit"]');
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Wird gesendet ...';
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
 
-  cardList.forEach(card => card.hidden = !matches.includes(card));
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(submitForm)
+      });
 
-  if (matches.length === 0) {
-    cards.innerHTML = '<p class="no-results">Keine passende Marktlücke gefunden. Vielleicht ist genau das selbst eine Marktlücke?</p>';
-  }
+      const result = await response.json();
 
-  document.getElementById('beliebt').scrollIntoView({ behavior: 'smooth' });
-});
-
-document.getElementById('submitIdea').addEventListener('click', () => {
-  alert('Das Einreichen von Marktlücken kommt als nächster Schritt.');
-});
+      if (result.success) {
+        formStatus.textContent = 'Danke! Deine Marktlücke wurde erfolgreich gesendet.';
+        formStatus.classList.add('success');
+        submitForm.reset();
+      } else {
+        throw new Error(result.message || 'Das Formular konnte nicht gesendet werden.');
+      }
+    } catch (error) {
+      formStatus.textContent = 'Das Senden ist fehlgeschlagen. Bitte versuche es später erneut.';
+      formStatus.classList.add('error');
+      console.error(error);
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  });
+}

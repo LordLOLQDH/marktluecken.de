@@ -1,63 +1,33 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Marktlücken.explore – Entdecke Marktlücken und Ideen, die es noch nicht gibt.">
-  <title>Marktlücken.explore</title>
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="style.css?v=4">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Marktlücken.explore – Entdecke Marktlücken und Ideen, die es noch nicht gibt.">
+<title>Marktlücken.explore</title>
+<link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest"><link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
-  <header class="header">
-    <a class="logo" href="index.html" aria-label="Marktlücken.de Startseite">Marktlücken<span>.explore</span></a>
-    <button class="menu-button" id="menuButton" aria-label="Menü öffnen" aria-expanded="false">☰</button>
-    <nav class="menu" id="menu" aria-hidden="true">
-      <a href="index.html">Marktlücken.de</a><a href="explore.html">Erkunden</a><a href="#kategorien">Kategorien</a><a href="#neu">Marktlücke einreichen</a>
-    </nav>
-  </header>
-  <main>
-    <section class="hero explore-hero">
-      <p class="eyebrow">Marktlücken.explore</p>
-      <h1>Entdecke, was fehlt.</h1>
-      <p class="intro">Durchsuche Marktlücken, entdecke neue Ideen und finde Probleme, für die noch niemand eine gute Lösung gebaut hat.</p>
-      <form class="search" id="exploreSearchForm"><label for="exploreSearchInput" class="sr-only">Marktlücken durchsuchen</label><input id="exploreSearchInput" type="search" placeholder="Marktlücken durchsuchen ..." autocomplete="off"><button type="submit">Suchen</button></form>
-    </section>
-    <section class="section" id="kategorien">
-      <div class="section-heading">
-        <div class="section-title"><p class="eyebrow">Übersicht</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2><p class="results-count" id="visibleCount"></p></div>
-        <div class="explore-controls">
-          <label for="categoryFilter"><span>Kategorie</span><select id="categoryFilter" aria-label="Kategorie filtern"><option value="all">Alle Kategorien</option></select></label>
-          <label for="statusFilter"><span>Status</span><select id="statusFilter" aria-label="Status filtern"><option value="all">Alle Status</option><option value="unknown">Unbekannt</option><option value="free">Frei</option><option value="development">In Entwicklung</option><option value="used">In Benutzung</option></select></label>
-          <label for="sortIdeas"><span>Sortierung</span><select id="sortIdeas" aria-label="Marktlücken sortieren"><option value="number">Nummer</option><option value="title">Name A–Z</option><option value="category">Kategorie</option><option value="random">Zufällig</option></select></label>
-          <button class="random-button" id="randomIdea" type="button">Zufällige Marktlücke <span>↗</span></button>
-        </div>
-      </div>
-      <div class="cards" id="exploreCards"></div>
-      <p id="noExploreResults" class="no-results" hidden>Keine passende Marktlücke gefunden.</p>
-    </section>
-    <section class="submit-section" id="neu"><p class="eyebrow">Mitmachen</p><h2>Du kennst eine Marktlücke?</h2><p>Teile ein Problem, eine Idee oder etwas, das deiner Meinung nach längst existieren sollte.</p><button class="outline-button" type="button" id="submitIdea">Marktlücke einreichen</button></section>
-  </main>
-  <footer><a href="index.html">Marktlücken.de</a><span>Marktlücken.explore</span></footer>
-  <script src="ideas.js"></script>
-  <script src="script.js"></script>
-  <script>
-    const SUPABASE_URL='https://rgdnhcmeuhkyltzpbola.supabase.co';
-    const SUPABASE_KEY='sb_publishable_glmpXsPENr7rftV-FSdq2w_k9vknOhI';
-    const STATUS_LABELS={unknown:'Unbekannt',free:'Frei',development:'In Entwicklung',used:'In Benutzung'};
-    const exploreForm=document.getElementById('exploreSearchForm'),input=document.getElementById('exploreSearchInput'),cardsEl=document.getElementById('exploreCards'),noResults=document.getElementById('noExploreResults'),randomButton=document.getElementById('randomIdea'),categoryFilter=document.getElementById('categoryFilter'),statusFilter=document.getElementById('statusFilter'),sortIdeas=document.getElementById('sortIdeas'),visibleCount=document.getElementById('visibleCount');
-    let statusMap={};
-    const categories=[...new Set(MARKTLUECKEN_IDEAS.map(idea=>idea.tag))].sort((a,b)=>a.localeCompare(b,'de'));
-    categories.forEach(category=>{const option=document.createElement('option');option.value=category;option.textContent=category;categoryFilter.appendChild(option);});
-    function statusClass(status){return `status-${status||'unknown'}`;}
-    function renderIdeas(){let ideas=[...MARKTLUECKEN_IDEAS];if(sortIdeas.value==='title')ideas.sort((a,b)=>a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='category')ideas.sort((a,b)=>a.tag.localeCompare(b.tag,'de')||a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='random')ideas.sort(()=>Math.random()-.5);cardsEl.innerHTML=ideas.map(idea=>{const number=String(MARKTLUECKEN_IDEAS.indexOf(idea)+1).padStart(3,'0'),status=statusMap[idea.id]||'unknown';return `<article class="card explore-card" data-number="${number}" data-search="${idea.title} ${idea.tag} ${idea.description}" data-category="${idea.tag}" data-status="${status}" tabindex="-1"><div class="card-topline"><span class="idea-number">#${number}</span><span class="tag">${idea.tag}</span></div><h3>${idea.title}</h3><p>${idea.description}</p><div class="card-bottomline"><span class="status-badge ${statusClass(status)}">${STATUS_LABELS[status]}</span><a href="marktluecke.html?id=${encodeURIComponent(idea.id)}">Marktlücke ansehen →</a></div></article>`;}).join('');filterExplore();}
-    function filterExplore(){const q=input.value.trim().toLowerCase(),cat=categoryFilter.value,status=statusFilter.value,cards=[...document.querySelectorAll('.explore-card')];let visible=0;cards.forEach(card=>{const match=(!q||card.dataset.search.toLowerCase().includes(q))&&(cat==='all'||card.dataset.category===cat)&&(status==='all'||card.dataset.status===status);card.hidden=!match;if(match)visible++;});visibleCount.textContent=`${visible} von ${MARKTLUECKEN_IDEAS.length} Marktlücken angezeigt`;noResults.hidden=visible!==0;}
-    async function loadStatuses(){try{const response=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken?select=id,status`,{headers:{apikey:SUPABASE_KEY,Accept:'application/json'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);const rows=await response.json();statusMap=Object.fromEntries(rows.map(row=>[row.id,row.status]));}catch(error){console.warn('Supabase Status:',error);}renderIdeas();}
-    renderIdeas();loadStatuses();exploreForm.addEventListener('submit',e=>{e.preventDefault();filterExplore();});input.addEventListener('input',filterExplore);categoryFilter.addEventListener('change',filterExplore);statusFilter.addEventListener('change',filterExplore);sortIdeas.addEventListener('change',renderIdeas);randomButton.addEventListener('click',()=>{const cards=[...document.querySelectorAll('.explore-card')].filter(c=>!c.hidden);if(!cards.length)return;const card=cards[Math.floor(Math.random()*cards.length)];card.scrollIntoView({behavior:'smooth',block:'center'});card.focus({preventScroll:true});});
-  </script>
-</body>
-</html>
+<header class="header"><a class="logo" href="index.html" aria-label="Marktlücken.de Startseite">Marktlücken<span>.explore</span></a><button class="menu-button" id="menuButton" aria-label="Menü öffnen" aria-expanded="false">☰</button><nav class="menu" id="menu" aria-hidden="true"><a href="index.html">Marktlücken.de</a><a href="explore.html">Erkunden</a><a href="#kategorien">Kategorien</a><a href="index.html#neu">Marktlücke einreichen</a></nav></header>
+<main>
+<section class="hero explore-hero"><p class="eyebrow">Marktlücken.explore</p><h1>Entdecke, was fehlt.</h1><p class="intro">Durchsuche Marktlücken, entdecke neue Ideen und finde Probleme, für die noch niemand eine gute Lösung gebaut hat.</p><form class="search" id="exploreSearchForm"><label for="exploreSearchInput" class="sr-only">Marktlücken durchsuchen</label><input id="exploreSearchInput" type="search" placeholder="Marktlücken durchsuchen ..." autocomplete="off"><button type="submit">Suchen</button></form></section>
+<section class="section" id="kategorien">
+<div class="section-heading"><div class="section-title"><p class="eyebrow">Übersicht</p><h2>Alle Marktlücken <span id="ideaCount"></span></h2><p class="results-count" id="visibleCount"></p></div><div class="explore-controls"><label for="categoryFilter"><span>Kategorie</span><select id="categoryFilter"><option value="all">Alle Kategorien</option></select></label><label for="statusFilter"><span>Status</span><select id="statusFilter"><option value="all">Alle Status</option><option value="unknown">Unbekannt</option><option value="free">Frei</option><option value="development">In Entwicklung</option><option value="used">In Benutzung</option></select></label><label for="sortIdeas"><span>Sortierung</span><select id="sortIdeas"><option value="number">Nummer</option><option value="score">Potenzial</option><option value="likes">Beliebt</option><option value="views">Meistgesehen</option><option value="title">Name A–Z</option><option value="category">Kategorie</option><option value="random">Zufällig</option></select></label><button class="random-button" id="randomIdea" type="button">Zufällige Marktlücke <span>↗</span></button></div></div>
+<div class="cards" id="exploreCards"></div><p id="noExploreResults" class="no-results" hidden>Keine passende Marktlücke gefunden.</p>
+</section>
+<section class="submit-section" id="neu"><p class="eyebrow">Mitmachen</p><h2>Du kennst eine Marktlücke?</h2><p>Teile ein Problem, eine Idee oder etwas, das deiner Meinung nach längst existieren sollte.</p><a class="outline-button" href="index.html#neu">Marktlücke einreichen</a></section>
+</main><footer><a href="index.html">Marktlücken.de</a><span>Marktlücken.explore</span></footer>
+<script src="ideas.js"></script><script src="script.js"></script>
+<script>
+const SUPABASE_URL='https://rgdnhcmeuhkyltzpbola.supabase.co',SUPABASE_KEY='sb_publishable_glmpXsPENr7rftV-FSdq2w_k9vknOhI';
+const STATUS_LABELS={unknown:'Unbekannt',free:'Frei',development:'In Entwicklung',used:'In Benutzung'};
+const form=document.getElementById('exploreSearchForm'),input=document.getElementById('exploreSearchInput'),cardsEl=document.getElementById('exploreCards'),noResults=document.getElementById('noExploreResults'),randomButton=document.getElementById('randomIdea'),categoryFilter=document.getElementById('categoryFilter'),statusFilter=document.getElementById('statusFilter'),sortIdeas=document.getElementById('sortIdeas'),visibleCount=document.getElementById('visibleCount');
+let statsMap={};
+const categories=[...new Set(MARKTLUECKEN_IDEAS.map(i=>i.tag))].sort((a,b)=>a.localeCompare(b,'de'));categories.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;categoryFilter.appendChild(o);});
+document.getElementById('ideaCount').textContent=`(${MARKTLUECKEN_IDEAS.length})`;
+function getStats(id){return statsMap[id]||{status:'unknown',likes:0,views:0,builders:0,score:0};}
+function renderIdeas(){let ideas=[...MARKTLUECKEN_IDEAS];if(sortIdeas.value==='score')ideas.sort((a,b)=>getStats(b.id).score-getStats(a.id).score);else if(sortIdeas.value==='likes')ideas.sort((a,b)=>getStats(b.id).likes-getStats(a.id).likes);else if(sortIdeas.value==='views')ideas.sort((a,b)=>getStats(b.id).views-getStats(a.id).views);else if(sortIdeas.value==='title')ideas.sort((a,b)=>a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='category')ideas.sort((a,b)=>a.tag.localeCompare(b.tag,'de')||a.title.localeCompare(b.title,'de'));else if(sortIdeas.value==='random')ideas.sort(()=>Math.random()-.5);
+cardsEl.innerHTML=ideas.map((idea,i)=>{const n=String(MARKTLUECKEN_IDEAS.indexOf(idea)+1).padStart(3,'0'),s=getStats(idea.id),st=s.status||'unknown';return `<article class="card explore-card" data-search="${idea.title} ${idea.tag} ${idea.description}" data-category="${idea.tag}" data-status="${st}" data-score="${s.score}" data-likes="${s.likes}" data-views="${s.views}"><div class="card-topline"><span class="idea-number">#${n}</span><span class="tag">${idea.tag}</span></div><h3>${idea.title}</h3><p>${idea.description}</p><div class="idea-metrics"><strong>★ ${s.score}/100</strong><span>♥ ${s.likes}</span><span>◉ ${s.views}</span><span>⚒ ${s.builders}</span></div><div class="card-bottomline"><span class="status-badge status-${st}">${STATUS_LABELS[st]}</span><a href="marktluecke.html?id=${encodeURIComponent(idea.id)}">Marktlücke ansehen →</a></div></article>`;}).join('');filterExplore();}
+function filterExplore(){const q=input.value.trim().toLowerCase(),cat=categoryFilter.value,status=statusFilter.value,cards=[...document.querySelectorAll('.explore-card')];let visible=0;cards.forEach(c=>{const ok=(!q||c.dataset.search.toLowerCase().includes(q))&&(cat==='all'||c.dataset.category===cat)&&(status==='all'||c.dataset.status===status);c.hidden=!ok;if(ok)visible++;});visibleCount.textContent=`${visible} von ${MARKTLUECKEN_IDEAS.length} Marktlücken angezeigt`;noResults.hidden=visible!==0;}
+async function loadStats(){try{const r=await fetch(`${SUPABASE_URL}/rest/v1/marktluecken_stats?select=id,status,likes,views,builders,score`,{headers:{apikey:SUPABASE_KEY,Accept:'application/json'}});if(!r.ok)throw new Error(`HTTP ${r.status}`);statsMap=Object.fromEntries((await r.json()).map(x=>[x.id,x]));}catch(e){console.warn('Supabase Stats:',e);}renderIdeas();}
+renderIdeas();loadStats();form.addEventListener('submit',e=>{e.preventDefault();filterExplore();});input.addEventListener('input',filterExplore);categoryFilter.addEventListener('change',filterExplore);statusFilter.addEventListener('change',filterExplore);sortIdeas.addEventListener('change',renderIdeas);randomButton.addEventListener('click',()=>{const c=[...document.querySelectorAll('.explore-card')].filter(x=>!x.hidden);if(!c.length)return;c[Math.floor(Math.random()*c.length)].scrollIntoView({behavior:'smooth',block:'center'});});
+</script></body></html>
